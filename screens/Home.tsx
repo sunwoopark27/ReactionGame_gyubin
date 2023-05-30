@@ -99,7 +99,8 @@ const Home = () => {
 
            <HomeImageArea>
                <BackImage source={{ uri: 'https://cdn-icons-png.flaticon.com/512/1729/1729809.png' }}/>
-               <AnimatedHomeImage source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/13/01/18/sniper-155485_960_720.png' }} style={{ transform: [{ translateX }] }} />
+               <AnimatedHomeImage source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/13/01/18/sniper-155485_960_720.png' }}
+                                  style={{ transform: [{ translateX }] }} />
            </HomeImageArea>
         </Container>
 

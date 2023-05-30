@@ -15,14 +15,6 @@ const HomeStack = () => {
             }}
         >
             <NativeStack.Screen
-                name="Game"
-                component={Game}
-                options={{
-                    headerShown: false
-                }
-                }
-            />
-            <NativeStack.Screen
                 name="Home"
                 component={Home}
                 options={{
@@ -30,7 +22,14 @@ const HomeStack = () => {
                 }
                 }
             />
-
+            <NativeStack.Screen
+                name="Game"
+                component={Game}
+                options={{
+                    headerShown: false
+                }
+                }
+            />
         </NativeStack.Navigator>
     )
 }

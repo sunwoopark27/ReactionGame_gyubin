@@ -101,18 +101,24 @@ const RestartText = styled.Text`
    border-radius: 10px;
 `
 
+const GoHome = styled.TouchableOpacity`
+  top: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`
+
 const App = () => {
     const [timer, setTimer] = useState<any>();
     const [countdownLetters, setCountdownLetters] = useState(['Bang', 'Steady', 'Ready']);
 
     const [upPressed, setUpPressed] = useState(false);
     const [downPressed, setDownPressed] = useState(false);
-    const [upReactionTime, setUpReactionTime] = useState<any>(null);
-    const [downReactionTime, setDownReactionTime] = useState<any>(null);
+    const [upReactionTime, setUpReactionTime] = useState<any>(9999);
+    const [downReactionTime, setDownReactionTime] = useState<any>(9999);
     const [start, setStart] = useState(false)
     const [upScore, setUpScore] = useState(0);
     const [dnScore, setDnScore] = useState(0);
-    const [rotate, setRotate] = useState(false);
 
     const [fastClick, setFastClick] = useState(false)
 
@@ -175,17 +181,19 @@ const App = () => {
                 setDownWin(true);
                 setDnScore(dnScore+1);
                 setFastClick(true);
+                setStart(false);
             } else if (direction === 'down') {
                 setDownPressed(true);
                 setDownReactionTime(9999)
                 setUpWin(true);
                 setUpScore(upScore+1)
                 setFastClick(true)
+                setStart(false);
             }
         }
     };
 
-    useEffect(() => {
+  /*  useEffect(() => {
         let intervalId: any;
         if (timer > 0) {
             const intervalTime = Math.floor(Math.random() * 1000) + 500;
@@ -197,14 +205,31 @@ const App = () => {
             startTime = new Date();
         }
         return () => clearInterval(intervalId);
-    }, [timer]);
+    }, [timer]);*/
+useEffect(() => {
+  let timeoutId;
 
+  const updateTimer = () => {
+    const randomInterval = Math.floor(Math.random() * 1000) + 500; // Random interval between 500ms and 2500ms
+    const randomTime = Math.floor(Math.random() * 3); // Random time value between 0 and 9
+    setTimer(randomTime);
+    timeoutId = setTimeout(updateTimer, randomInterval);
+  };
+
+  updateTimer();
+
+  return () => clearTimeout(timeoutId);
+}, []);
     return (
         <>
             {upScore === 5 || dnScore === 5 ?
                 <Container style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
                     <WinImage source={{ uri: 'https://dotown.maeda-design-room.net/wp-content/uploads/2022/08/hanabi08.png' }}/>
-                    <WinText>{upScore === 5? <Text>User1</Text>:<Text>User2</Text>} Winner</WinText>
+                    <WinText>{upScore === 5? <Text>상대</Text>:<Text>나</Text>} Winner</WinText>
+
+                    <GoHome onPress={goHome}>
+                        <RestartText>홈</RestartText>
+                    </GoHome>
                 </Container>:
                 (
                     <Container>
